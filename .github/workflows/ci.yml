@@ -8,12 +8,15 @@ on:
 jobs:
   build_test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [16.x, 18.x, 20.x]
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Node.js (18)
+      - name: Setup Node.js (${{ matrix.node }})
         uses: actions/setup-node@v4
         with:
-          node-version: "18"
+          node-version: ${{ matrix.node }}
           cache: npm
       
       - name: Install dependencies
@@ -29,4 +32,3 @@ jobs:
         with:
           name: build
           path: dist/
-
